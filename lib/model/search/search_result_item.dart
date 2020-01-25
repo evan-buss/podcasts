@@ -33,7 +33,6 @@ class SearchResultItem {
   String primaryGenreName;
   String contentAdvisoryRating;
   String artworkUrl600;
-  //TODO: is this correct?
   List<String> genereIds;
   List<String> genres;
 
