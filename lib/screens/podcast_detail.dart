@@ -15,6 +15,12 @@ class PodcastDetail extends StatefulWidget {
 class _PodcastDetailState extends State<PodcastDetail> {
   RssFeed rssFeed;
 
+  Widget _podcastWidget(RssFeed feed) {
+    return Column(
+      children: <Widget>[Image.network(feed.image.url)],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +31,10 @@ class _PodcastDetailState extends State<PodcastDetail> {
         future: RssService.ParseFeed(widget.podcast.feedUrl),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListTile(
-              title: Text(snapshot.data.title),
-              subtitle: Text(snapshot.data.description),
-            );
+            return _podcastWidget(snapshot.data);
           }
 
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       ),
     );
