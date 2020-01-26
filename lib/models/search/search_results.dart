@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:podcasts/model/search/search_result_item.dart';
+import 'package:podcasts/models/search/search_result_item.dart';
 
 part 'search_results.g.dart';
 

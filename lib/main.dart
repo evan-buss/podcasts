@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:podcasts/model/search/search_result_item.dart';
-import 'package:podcasts/model/search/search_results.dart';
-import 'package:podcasts/service/search_service.dart';
-import 'package:podcasts/view/podcast_detail.dart';
+import 'package:podcasts/models/search/search_result_item.dart';
+import 'package:podcasts/models/search/search_results.dart';
+import 'package:podcasts/services/search_service.dart';
+import 'package:podcasts/screens/podcast_detail.dart';
 
 void main() => runApp(MyApp());
 
@@ -58,20 +58,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _buildPodcastItemList(List<SearchResultItem> results) {
     return results
-        .map<Widget>((result) => ListTile(
-              leading: Image.network(result.artworkUrl100),
-              title: Text(result.collectionName),
-              subtitle: Text(result.artistName),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PodcastDetail()),
-                );
-              },
-            ))
+        .map<Widget>(
+          (result) => ListTile(
+            leading: Image.network(result.artworkUrl100),
+            title: Text(result.collectionName),
+            subtitle: Text(result.artistName),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PodcastDetail(podcast: result)),
+              );
+            },
+          ),
+        )
         .toList();
   }
 
+  // TODO: Extract this functionality into a new widget page. The main should just show the app scaffold and bottom navigation....
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done

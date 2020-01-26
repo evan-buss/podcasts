@@ -1,0 +1,11 @@
+Create a custom sliver list to show a search bar at the top...
+Show podcast details when list item is clicked
+
+Figure out:
+ - How to parse large xml files (25,000 lines) on the fly, or if I need some sort of caching api to reduce client side load times
+ - How to notify users when there is a new release of a podcast
+ 
+Resources:
+ - Investigate the pocketcasts website api requests
+ - Watch the flutter podcast player miniseries to learn how to play audio
+

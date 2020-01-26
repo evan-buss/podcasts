@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:podcasts/model/search/search_results.dart';
+import 'package:podcasts/models/search/search_results.dart';
 
 class SearchService {
   static final String searchUrl = 'itunes.apple.com';
@@ -17,7 +17,7 @@ class SearchService {
     if (response.bodyBytes.length > 0) {
       return SearchResults.fromJson(jsonDecode(response.body.trim()));
     }
-    // Return null if we got no response...
+    // throw error if we didn't receive any response
     throw ("No response error");
   }
 }
