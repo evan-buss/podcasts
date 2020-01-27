@@ -13,11 +13,40 @@ class PodcastDetail extends StatefulWidget {
 }
 
 class _PodcastDetailState extends State<PodcastDetail> {
+  RssService rssService = new RssService();
   RssFeed rssFeed;
 
   Widget _podcastWidget(RssFeed feed) {
     return Column(
-      children: <Widget>[Image.network(feed.image.url)],
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(24.0),
+          child: new ClipRRect(
+            borderRadius: new BorderRadius.circular(12.0),
+            child: Image.network(
+              feed.image.url,
+            ),
+          ),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 24.0,
+                spreadRadius: 0.4,
+              )
+            ],
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(feed.title, style: Theme.of(context).textTheme.headline),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(feed.description,
+              style: Theme.of(context).textTheme.caption),
+        ),
+      ],
     );
   }
 
@@ -25,10 +54,10 @@ class _PodcastDetailState extends State<PodcastDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(""),
+        title: Text("Podcast Details"),
       ),
       body: FutureBuilder<RssFeed>(
-        future: RssService.ParseFeed(widget.podcast.feedUrl),
+        future: rssService.parseFeed(widget.podcast.feedUrl),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _podcastWidget(snapshot.data);

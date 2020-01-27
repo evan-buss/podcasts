@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+            headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            caption: TextStyle(fontSize: 14.0, color: Colors.grey)),
       ),
       home: MyHomePage(title: 'Podcast Search'),
     );
@@ -91,12 +94,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-              onPressed: () {
-                setState(() {
-                  searchResults = SearchService.searchPodcast('joe rogan');
-                });
-              },
-              icon: Icon(Icons.search))
+            onPressed: () {
+              setState(() {
+                searchResults = SearchService.searchPodcast('joe rogan');
+              });
+            },
+            icon: Icon(Icons.search),
+            tooltip: "Search",
+          ),
         ],
       ),
       body: (FutureBuilder<SearchResults>(
