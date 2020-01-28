@@ -1,3 +1,4 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:podcasts/models/search/search_result_item.dart';
 import 'package:podcasts/services/rss_service.dart';
@@ -17,34 +18,57 @@ class _PodcastDetailState extends State<PodcastDetail> {
   RssFeed rssFeed;
 
   Widget _podcastWidget(RssFeed feed) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(24.0),
-          child: new ClipRRect(
-            borderRadius: new BorderRadius.circular(12.0),
-            child: Image.network(
-              feed.image.url,
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 450.0,
+          flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            title: Text(
+              feed.title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+            stretchModes: [StretchMode.fadeTitle],
+            collapseMode: CollapseMode.pin,
+            background: FlipCard(
+              front: Card(
+                child: Image.network(
+                  feed.image.url,
+                  fit: BoxFit.cover,
+                ),
+                margin: EdgeInsets.all(12.0),
+                elevation: 4.0,
+              ),
+              back: Card(
+                  color: Colors.lightBlue,
+                  margin: EdgeInsets.all(12.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Text(feed.description,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline
+                            .apply(color: Colors.white)),
+                  ),
+                  elevation: 4.0),
             ),
           ),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 24.0,
-                spreadRadius: 0.4,
-              )
-            ],
-            borderRadius: BorderRadius.circular(12.0),
+        ),
+        SliverFixedExtentList(
+          itemExtent: 50.0,
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Container(
+                alignment: Alignment.center,
+                color: Colors.lightBlue[100 * (index % 9)],
+                child: Text('List Item $index'),
+              );
+            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(feed.title, style: Theme.of(context).textTheme.headline),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(feed.description,
-              style: Theme.of(context).textTheme.caption),
         ),
       ],
     );
@@ -53,9 +77,6 @@ class _PodcastDetailState extends State<PodcastDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Podcast Details"),
-      ),
       body: FutureBuilder<RssFeed>(
         future: rssService.parseFeed(widget.podcast.feedUrl),
         builder: (context, snapshot) {

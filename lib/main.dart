@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
             headline: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            caption: TextStyle(fontSize: 14.0, color: Colors.grey)),
+            caption: TextStyle(fontSize: 14.0, color: Colors.white)),
       ),
       home: MyHomePage(title: 'Podcast Search'),
     );
