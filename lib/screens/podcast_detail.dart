@@ -28,7 +28,7 @@ class _PodcastDetailState extends State<PodcastDetail> {
             title: Text(
               feed.title,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.orange,
                 fontSize: 16.0,
               ),
             ),
@@ -36,6 +36,7 @@ class _PodcastDetailState extends State<PodcastDetail> {
             collapseMode: CollapseMode.pin,
             background: FlipCard(
               front: Card(
+                //TODO: Lower image gradient to make title visible
                 child: Image.network(
                   feed.image.url,
                   fit: BoxFit.cover,
@@ -58,17 +59,13 @@ class _PodcastDetailState extends State<PodcastDetail> {
             ),
           ),
         ),
-        SliverFixedExtentList(
-          itemExtent: 50.0,
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return Container(
-                alignment: Alignment.center,
-                color: Colors.lightBlue[100 * (index % 9)],
-                child: Text('List Item $index'),
-              );
-            },
-          ),
+        SliverList(
+          delegate: SliverChildListDelegate(feed.items.map((item) {
+            print(feed.items.length);
+            return ListTile(
+                title: Text(item.title ?? 'test'),
+                subtitle: Text(item.author ?? 'subtitle'));
+          }).toList()),
         ),
       ],
     );

@@ -9,3 +9,6 @@ Resources:
  - Investigate the pocketcasts website api requests
  - Watch the flutter podcast player miniseries to learn how to play audio
 
+Bugs:
+  - Occasional exceptions in the RssService class when parsing a feed. Both the HTTP request and the RssFeed.parse() methods return errors...
+
